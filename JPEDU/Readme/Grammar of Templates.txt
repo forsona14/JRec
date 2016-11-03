@@ -1,0 +1,65 @@
+I use a 'regular expression' to represent each template(which consists of several components).
+There are some special characters(SCs)
+
+[Template SCs]      show as one component of a template, describes some attributes of that template
+
+    ％
+        to customize the template's name(that shows in process string), like (〜＠形容詞ーない＊　％[形容詞]ない)
+        shows in the middle of the whole line, separates the components and the customized name
+        don't leave blank after ％(ok to leave before ％)
+        use half width symbols in customized name
+
+    〜
+        will match a word or a dependent node
+
+    〜を, 〜ては
+        will match a dependent node in the certain format
+        See Template.match_word()
+
+    ＾　
+        TODO
+        shows as the first component of a template
+
+    ＄
+        indicates this template will not show in process string
+        shows as the last component of a template.
+
+
+
+
+[Component SCs]     show as one character of a component, describes some attributes of that component
+
+    ＠
+        restricts the tag of the word to be matched, like (ご＠接頭詞)
+        shows at the beginning or the middle of a component (＠接頭詞　=　〜＠接頭詞)
+        to make (ご＠接頭詞) refuse '５分'
+
+    ＆
+        to match multiple tags, like (＠動詞＆連用形ーに)
+        always shows after ＠
+        remember to use ー to restrict when necessary
+
+    ＃
+        represents a set of synonyms, like ＃では＝[でーは,じゃ]
+        shows at the beginning of a component
+        to match multiple words WITH THE SAME MEANING
+
+    ー
+        represents a set of components that must show strictly successive, like (でーは　あり　ませ　ん)
+        shows at the middle of a component
+        to make (でーは　あり　ませ　ん)refuse '私で今日はありません'
+
+    ／
+        represents a set of acceptable components like (でーは／じゃ)
+        shows at the middle of a component
+        to match multiple choices at the same position (probably with different meanings)
+        でーは／じゃ will show as [では/じゃ] in the process string
+
+        Note:
+        1.    ー has higher priority then ／              eg. ない／ませーん
+        2.    か／ですーか is wrong because か is suffix of ですーか. Instead, use ですーか／か
+
+    ＊
+        accepts any morphing of that component, like (ある＊)
+        shows at the end of a component
+        to make (ある＊) accept 'あり'

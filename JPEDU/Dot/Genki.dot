@@ -1,0 +1,188 @@
+digraph
+{
+overlap=scale
+splines=true
+sep=0.1
+
+"(~時)" [color=gold pos="0,0!" shape=box fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"日本語です
+(~です)" [color=gold pos="3,0!" shape=box fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"(~か)" [color=gold pos="6,0!" shape=box fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"(~に)" [color=gold pos="9,0!" shape=box fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"(~の)" [color=gold pos="12,0!" shape=box fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"(~は)" [color=gold pos="15,0!" shape=box fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"(~ね)" [color=cyan pos="18,0!" shape=box fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"(~も)" [color=cyan pos="21,0!" shape=box fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"(~よ)" [color=cyan pos="24,0!" shape=box fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"(~を)" [color=cyan pos="27,0!" shape=box fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"(~をください)" [color=cyan pos="30,0!" shape=box fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"(~をどうぞ)" [color=cyan pos="33,0!" shape=box fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"魚ではありません
+(~ではありません)" [color=cyan pos="36,0!" shape=box fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"(~をお願いします)" [color=cyan pos="39,0!" shape=box fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"(お~)" [color=cyan pos="42,0!" shape=box fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"いま何時ですか
+(~時)(~です)(~か)" [color=gold pos="0,-5!" fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"十二時半です
+(~に)(~時)(~です)" [color=gold pos="4,-5!" fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"留学生ですか
+(~です)(~か)" [color=gold pos="8,-5!" fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"アリゾナ大学の学生です
+(~の)(~です)" [color=gold pos="12,-5!" fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"それは３０００円です
+(~は)(~です)" [color=gold pos="16,-5!" fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"高いですね
+(~です)(~ね)" [color=cyan pos="20,-5!" fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"あれも高いですね
+(~も)(~です)(~ね)" [color=cyan pos="24,-5!" fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"その時計をください
+(~を)(~をください)" [color=cyan pos="28,-5!" fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"メニューをどうぞ
+(~を)(~をどうぞ)" [color=cyan pos="32,-5!" fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"おいしいですよ
+(~です)(~よ)" [color=cyan pos="36,-5!" fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"これをお願いします
+(~を)(~をお願いします)" [color=cyan pos="40,-5!" fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"お手洗いはどこですか
+(お~)(~は)(~です)(~か)" [color=cyan pos="44,-5!" fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"専門は何ですか
+(~は)(~です)(~か)" [color=gold pos="0,-10!" fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"これは１８００円ですよ
+(~は)(~です)(~よ)" [color=cyan pos="5,-10!" fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"これはだれの財布ですか
+(~は)(~の)(~です)(~か)" [color=cyan pos="10,-10!" fontname="times-bold" fontsize=100.0 style="bold" style="filled"];
+"いま何時ですか
+(~時)(~です)(~か)" -> "十二時半です
+(~に)(~時)(~です)" [color=gold fontname="times-bold" fontsize=100 label="1" arrowhead=vee arrowsize=15 penwidth=30];
+"十二時半です
+(~に)(~時)(~です)" -> "留学生ですか
+(~です)(~か)" [color=gold fontname="times-bold" fontsize=100 label="2" arrowhead=vee arrowsize=15 penwidth=30];
+"留学生ですか
+(~です)(~か)" -> "アリゾナ大学の学生です
+(~の)(~です)" [color=gold fontname="times-bold" fontsize=100 label="3" arrowhead=vee arrowsize=15 penwidth=30];
+"アリゾナ大学の学生です
+(~の)(~です)" -> "専門は何ですか
+(~は)(~です)(~か)" [color=gold fontname="times-bold" fontsize=100 label="4" arrowhead=vee arrowsize=15 penwidth=30];
+"専門は何ですか
+(~は)(~です)(~か)" -> "日本語です
+(~です)" [color=gold fontname="times-bold" fontsize=100 label="5" arrowhead=vee arrowsize=15 penwidth=30];
+"専門は何ですか
+(~は)(~です)(~か)" -> "それは３０００円です
+(~は)(~です)" [color=cyan fontname="times-bold" fontsize=100 label="1" arrowhead=vee arrowsize=15 penwidth=30];
+"それは３０００円です
+(~は)(~です)" -> "高いですね
+(~です)(~ね)" [color=cyan fontname="times-bold" fontsize=100 label="2" arrowhead=vee arrowsize=15 penwidth=30];
+"高いですね
+(~です)(~ね)" -> "留学生ですか
+(~です)(~か)" [color=cyan fontname="times-bold" fontsize=100 label="3" arrowhead=vee arrowsize=15 penwidth=30];
+"留学生ですか
+(~です)(~か)" -> "あれも高いですね
+(~も)(~です)(~ね)" [color=cyan fontname="times-bold" fontsize=100 label="4" arrowhead=vee arrowsize=15 penwidth=30];
+"あれも高いですね
+(~も)(~です)(~ね)" -> "これは１８００円ですよ
+(~は)(~です)(~よ)" [color=cyan fontname="times-bold" fontsize=100 label="5" arrowhead=vee arrowsize=15 penwidth=30];
+"これは１８００円ですよ
+(~は)(~です)(~よ)" -> "その時計をください
+(~を)(~をください)" [color=cyan fontname="times-bold" fontsize=100 label="6" arrowhead=vee arrowsize=15 penwidth=30];
+"その時計をください
+(~を)(~をください)" -> "これはだれの財布ですか
+(~は)(~の)(~です)(~か)" [color=cyan fontname="times-bold" fontsize=100 label="7" arrowhead=vee arrowsize=15 penwidth=30];
+"これはだれの財布ですか
+(~は)(~の)(~です)(~か)" -> "アリゾナ大学の学生です
+(~の)(~です)" [color=cyan fontname="times-bold" fontsize=100 label="8" arrowhead=vee arrowsize=15 penwidth=30];
+"アリゾナ大学の学生です
+(~の)(~です)" -> "メニューをどうぞ
+(~を)(~をどうぞ)" [color=cyan fontname="times-bold" fontsize=100 label="9" arrowhead=vee arrowsize=15 penwidth=30];
+"メニューをどうぞ
+(~を)(~をどうぞ)" -> "日本語です
+(~です)" [color=cyan fontname="times-bold" fontsize=100 label="10" arrowhead=vee arrowsize=15 penwidth=30];
+"日本語です
+(~です)" -> "魚ではありません
+(~ではありません)" [color=cyan fontname="times-bold" fontsize=100 label="11" arrowhead=vee arrowsize=15 penwidth=30];
+"魚ではありません
+(~ではありません)" -> "おいしいですよ
+(~です)(~よ)" [color=cyan fontname="times-bold" fontsize=100 label="12" arrowhead=vee arrowsize=15 penwidth=30];
+"おいしいですよ
+(~です)(~よ)" -> "これをお願いします
+(~を)(~をお願いします)" [color=cyan fontname="times-bold" fontsize=100 label="13" arrowhead=vee arrowsize=15 penwidth=30];
+"これをお願いします
+(~を)(~をお願いします)" -> "お手洗いはどこですか
+(お~)(~は)(~です)(~か)" [color=cyan fontname="times-bold" fontsize=100 label="14" arrowhead=vee arrowsize=15 penwidth=30];
+"(~時)" -> "いま何時ですか
+(~時)(~です)(~か)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"(~時)" -> "十二時半です
+(~に)(~時)(~です)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"日本語です
+(~です)" -> "十二時半です
+(~に)(~時)(~です)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"日本語です
+(~です)" -> "留学生ですか
+(~です)(~か)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"日本語です
+(~です)" -> "アリゾナ大学の学生です
+(~の)(~です)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"日本語です
+(~です)" -> "それは３０００円です
+(~は)(~です)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"日本語です
+(~です)" -> "高いですね
+(~です)(~ね)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"日本語です
+(~です)" -> "おいしいですよ
+(~です)(~よ)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"(~か)" -> "留学生ですか
+(~です)(~か)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"(~に)" -> "十二時半です
+(~に)(~時)(~です)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"留学生ですか
+(~です)(~か)" -> "いま何時ですか
+(~時)(~です)(~か)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"留学生ですか
+(~です)(~か)" -> "専門は何ですか
+(~は)(~です)(~か)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"アリゾナ大学の学生です
+(~の)(~です)" -> "これはだれの財布ですか
+(~は)(~の)(~です)(~か)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"(~の)" -> "アリゾナ大学の学生です
+(~の)(~です)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"専門は何ですか
+(~は)(~です)(~か)" -> "これはだれの財布ですか
+(~は)(~の)(~です)(~か)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"専門は何ですか
+(~は)(~です)(~か)" -> "お手洗いはどこですか
+(お~)(~は)(~です)(~か)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"(~は)" -> "それは３０００円です
+(~は)(~です)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"それは３０００円です
+(~は)(~です)" -> "専門は何ですか
+(~は)(~です)(~か)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"それは３０００円です
+(~は)(~です)" -> "これは１８００円ですよ
+(~は)(~です)(~よ)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"高いですね
+(~です)(~ね)" -> "あれも高いですね
+(~も)(~です)(~ね)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"(~ね)" -> "高いですね
+(~です)(~ね)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"(~も)" -> "あれも高いですね
+(~も)(~です)(~ね)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"(~よ)" -> "おいしいですよ
+(~です)(~よ)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"(~を)" -> "その時計をください
+(~を)(~をください)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"(~を)" -> "メニューをどうぞ
+(~を)(~をどうぞ)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"(~を)" -> "これをお願いします
+(~を)(~をお願いします)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"(~をください)" -> "その時計をください
+(~を)(~をください)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"(~をどうぞ)" -> "メニューをどうぞ
+(~を)(~をどうぞ)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"おいしいですよ
+(~です)(~よ)" -> "これは１８００円ですよ
+(~は)(~です)(~よ)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"(~をお願いします)" -> "これをお願いします
+(~を)(~をお願いします)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+"(お~)" -> "お手洗いはどこですか
+(お~)(~は)(~です)(~か)" [color=gray arrowhead=vee arrowsize=3 penwidth=5];
+}
