@@ -35,14 +35,17 @@ class SimpleUI:
             if match:
                 news_id = match.group(1)
                 text = match.group(2)
-                articles[news_id] = Article(news_id, text)
-            wl = get_word_list_of_text(text)
-            wl = [w for w in wl if not w in stoplist]
+                # articles[news_id] = Article(news_id, text)
+                paras = re.split(' ',text)
+                for pid in xrange(len(paras)):
+                    news_para_id = news_id + '_para' + str(pid + 1)
+                    if len(paras[pid].strip()) > 0:
+                        articles[news_para_id] = Article(news_para_id, paras[pid].strip())
+                        print news_para_id, paras[pid]
         return articles
 
-    def process(self, textbox, str_response):
-
-        response = (4-int(str_response))
+    def process(self, textbox, raw_response):
+        response = 4-raw_response
         self.recommender.feedback(self.display_article, response)
         self.display_article = self.recommender.feed(self.articles)
 
@@ -58,9 +61,11 @@ class SimpleUI:
         self.display_article = self.recommender.feed(self.articles)
         textbox.insert(END, self.display_article.text.replace(' ', '\n\n'))
         textbox.grid(row=0, column=0, columnspan=5)
-        for i in xrange(5):
-            b = Button(text=str(i * 25)+'%', command=lambda: self.process(textbox, str(i)))
-            b.grid(row=1, column=i, sticky=N+S+E+W)
+        Button(text='0%', command=lambda: self.process(textbox, 0)).grid(row=1, column=0, sticky=N + S + E + W)
+        Button(text='25%', command=lambda: self.process(textbox, 1)).grid(row=1, column=1, sticky=N + S + E + W)
+        Button(text='50%', command=lambda: self.process(textbox, 2)).grid(row=1, column=2, sticky=N + S + E + W)
+        Button(text='75%', command=lambda: self.process(textbox, 3)).grid(row=1, column=3, sticky=N + S + E + W)
+        Button(text='100%', command=lambda: self.process(textbox, 4)).grid(row=1, column=4, sticky=N + S + E + W)
         tk.mainloop()
 
 
