@@ -27,10 +27,10 @@ class ProcessGraphNode:
             self.depth = Utl.maxint
 
     def if_easier(self,pgn):
-        if self.process == pgn.process:
+        if self.process == pgn.mastery_iter:
             return False
         tps1 = Utl.split(self.process,'{}')
-        tps2 = Utl.split(pgn.process,'{}')
+        tps2 = Utl.split(pgn.mastery_iter, '{}')
         return not False in [i in tps2 for i in tps1]
 
     def toString(self):
@@ -70,7 +70,7 @@ class ProcessGraph:
         if process == '':
             return -1
         for i in range(len(self.nodes)):
-            if self.nodes[i].process == process:
+            if self.nodes[i].mastery_iter == process:
                 if self.nodes[i].example == '':
                     self.nodes[i].example = example
                 return i

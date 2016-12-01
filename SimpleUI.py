@@ -6,6 +6,8 @@ import tkFont
 import re
 from Article import Article
 from Recommender import Recommender
+from Knowledge import *
+from Interaction import *
 from JPEDU.WordStats import get_word_list_of_text
 from JPEDU.Japanese import stoplist
 
@@ -19,10 +21,13 @@ class SimpleUI:
             self.all_wordlist += a.wordlist
         self.all_wordlist = sorted(self.all_wordlist)
         self.all_uniq_wordlist = list(set(self.all_wordlist))
+        self.word_index = {self.all_uniq_wordlist[i]:i for i in xrange(len(self.all_uniq_wordlist))}
         #zipf = {w:self.all_wordlist.count(w) for w in self.all_uniq_wordlist}
         #print sorted(zipf.values())
         #print sum([len(a.wordlist) for a in self.articles]), len(self.all_wordlist)
         self.recommender = Recommender()
+        self.hci = Interaction(self)
+        print 'Edge Density:', self.hci.knowledge.EdgeDensity()
         self.display_article = 0
 
     @staticmethod
@@ -55,13 +60,29 @@ class SimpleUI:
                                 print news_para_sentence_id, sentences[sid].strip()
         return articles
 
-    def process(self, textbox, m, e):
+    def mastery_iter(self, textbox, m, e):
         self.recommender.feedback(self.display_article, m, e)
         self.display_article = self.recommender.feed(self.articles)
 
         textbox.delete('1.0', END)
         textbox.insert(END, self.display_article.text.replace(' ', '\n\n'))
         #textbox.insert(END, self.iter_news.next().replace(' ', '\n\n'))
+
+    def kb_iter(self, textbox, m, e):
+        if e > 0:
+            self.hci.response(StudentResponse.UNDERSTOOD)
+        else:
+            self.hci.response(StudentResponse.NOT_UNDERSTOOD)
+        res = self.hci.request()
+        if res.process:
+            self.display_article = self.articles[res.process.doc_id]
+        else:
+            return
+        kb = self.hci.knowledge_boundary()
+        print sum([kb.ProcessStatus[up.uniq_id] for up in kb.Knowledge.UniqueProcesses]),'/', len(kb.Knowledge.UniqueProcesses)
+        textbox.delete('1.0', END)
+        textbox.insert(END, self.display_article.text.replace(' ', '\n\n'))
+
 
     def build_graph(self):
         INTER_RATE = 0.6
@@ -78,10 +99,15 @@ class SimpleUI:
                 if l2 < l1 and inter >= l2 * INTER_RATE:
                     graph[j][i] = True
                     cnt += 1
-        print cnt, len(self.articles)
+        #print cnt, len(self.articles)
+        return graph
 
 
     def main(self):
+
+        #k = Knowledge(self)
+        #return
+
         #self.build_graph()
         #return
 
@@ -101,10 +127,16 @@ class SimpleUI:
         Radiobutton(tk, text='100%', variable=m, value=0).grid(row=1, column=4, sticky=N + S + E + W)
         e = IntVar()
         e.set(1)
-        Radiobutton(tk, text='I prefer easier articles.', variable=e, value=0).grid(row=2, column=1, sticky=N + S + E + W)
-        Radiobutton(tk, text='I enjoy this article!', variable=e, value=1).grid(row=2, column=2, sticky=N + S + E + W)
-        Radiobutton(tk, text='I prefer harder articles.', variable=e, value=2).grid(row=2, column=3, sticky=N + S + E + W)
-        Button(tk, text='Submit', height=1, width=12, font=tkFont.Font(size=24), command = lambda: self.process(textbox, m.get(), e.get())).grid(row=3, column=1, columnspan=3)
+        #Radiobutton(tk, text='I prefer easier articles.', variable=e, value=0).grid(row=2, column=1, sticky=N + S + E + W)
+        #Radiobutton(tk, text='I enjoy this article!', variable=e, value=1).grid(row=2, column=2, sticky=N + S + E + W)
+        #Radiobutton(tk, text='I prefer harder articles.', variable=e, value=2).grid(row=2, column=3, sticky=N + S + E + W)
+        #Button(tk, text='Submit', height=1, width=12, font=tkFont.Font(size=24), command = lambda: self.kb_iter(textbox, m.get(), e.get())).grid(row=3, column=1, columnspan=3)
+        Button(tk, text='I prefer easier articles.', height=1, width=22, font=tkFont.Font(size=10),
+               command=lambda: self.kb_iter(textbox, m.get(), 0)).grid(row=2, column=1, sticky=N + S + E + W)
+        Button(tk, text='I enjoy this article.', height=1, width=18, font=tkFont.Font(size=10),
+               command=lambda: self.kb_iter(textbox, m.get(), 1)).grid(row=2, column=2, sticky=N + S + E + W)
+        Button(tk, text='I prefer harder articles.', height=1, width=22, font=tkFont.Font(size=10),
+               command=lambda: self.kb_iter(textbox, m.get(), 2)).grid(row=2, column=3, sticky=N + S + E + W)
         tk.mainloop()
 
 

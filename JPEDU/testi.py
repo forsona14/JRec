@@ -8,7 +8,7 @@ while True:
         print 'end'
         break
     else:
-        print hci.num_assessment_answered + 1 , '.', response.process.sentence, response.message
+        print hci.num_assessment_answered + 1 , '.', response.mastery_iter.sentence, response.message
         ans = input()
         if ans == 1:
             hci.response(StudentResponse.UNDERSTOOD)
