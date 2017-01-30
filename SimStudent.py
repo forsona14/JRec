@@ -2,7 +2,7 @@ import re
 import random
 from math import fabs
 from Article import Article
-from Recommender import Recommender
+from MasteryRecommender import MasteryRecommender
 from JPEDU.WordStats import get_word_list_of_text
 from JPEDU.Japanese import stoplist
 
@@ -19,7 +19,7 @@ class SimStudent:
         #zipf = {w:self.all_wordlist.count(w) for w in self.all_uniq_wordlist}
         #print sorted(zipf.values())
         #print sum([len(a.wordlist) for a in self.articles]), len(self.all_wordlist)
-        self.recommender = Recommender()
+        self.recommender = MasteryRecommender()
         self.display_article = 0
 
         self.random = random.Random()
@@ -50,7 +50,7 @@ class SimStudent:
                 pass
                 #self.mastery[w] = min(self.mastery[w], Recommender.MIN_MASTERY)
             else:
-                self.mastery[w] = Recommender.INIT_MASTERY
+                self.mastery[w] = MasteryRecommender.INIT_MASTERY
         return float(sum([self.mastery[w] for w in article.uniq_wordlist])) / len(article.uniq_wordlist)
 
     def cal_error(self):
@@ -64,11 +64,11 @@ class SimStudent:
     def one_test(self):
         err = []
         while True:
-            self.display_article = self.recommender.feed(self.articles)
+            self.display_article = self.recommender.request(self.articles)
             if self.display_article == None:
                 return err
             err.append(self.cal_error())
-            self.recommender.feedback(self.display_article, self.article_mastery(self.display_article))
+            self.recommender.response(self.display_article, self.article_mastery(self.display_article))
 
 
     def mul_test(self):
@@ -76,7 +76,7 @@ class SimStudent:
         for i in xrange(100):
             if i%10==0:
                 print 'iteration',i
-            self.recommender = Recommender()
+            self.recommender = MasteryRecommender()
             self.sim_mastery()
             errs.append(self.one_test())
         avg_err = [sum([e[i] for e in errs if len(e) > i])/len(errs) for i in xrange(len(errs[0]))]

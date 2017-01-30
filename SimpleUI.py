@@ -5,7 +5,7 @@ from Tkinter import *
 import tkFont
 import re
 from Article import Article
-from Recommender import Recommender
+from MasteryRecommender import MasteryRecommender
 from Knowledge import *
 from Interaction import *
 from JPEDU.WordStats import get_word_list_of_text
@@ -25,7 +25,7 @@ class SimpleUI:
         #zipf = {w:self.all_wordlist.count(w) for w in self.all_uniq_wordlist}
         #print sorted(zipf.values())
         #print sum([len(a.wordlist) for a in self.articles]), len(self.all_wordlist)
-        self.recommender = Recommender()
+        self.recommender = MasteryRecommender()
         self.hci = Interaction(self)
         print 'Edge Density:', self.hci.knowledge.EdgeDensity()
         self.display_article = 0
@@ -57,12 +57,12 @@ class SimpleUI:
                             news_para_sentence_id = news_para_id + '_s' + str(sid + 1)
                             if (len(sentences[sid].strip())) > 0:
                                 articles[news_para_sentence_id] = Article(news_para_sentence_id, sentences[sid].strip() + '。')
-                                print news_para_sentence_id, sentences[sid].strip()
+                                #print news_para_sentence_id, sentences[sid].strip()
         return articles
 
     def mastery_iter(self, textbox, m, e):
-        self.recommender.feedback(self.display_article, m, e)
-        self.display_article = self.recommender.feed(self.articles)
+        self.recommender.response(self.display_article, m, e)
+        self.display_article = self.recommender.request(self.articles)
 
         textbox.delete('1.0', END)
         textbox.insert(END, self.display_article.text.replace(' ', '\n\n'))
@@ -115,7 +115,7 @@ class SimpleUI:
         tk.title('SimpleUI       NHK_easy     Sona Tithew')
         tk.resizable(0,0)
         textbox = Text(tk, font=tkFont.Font(size=12))
-        self.display_article = self.recommender.feed(self.articles)
+        self.display_article = self.recommender.request(self.articles)
         textbox.insert(END, self.display_article.text.replace(' ', '\n\n'))
         textbox.grid(row=0, column=0, columnspan=5)
         m = IntVar()
