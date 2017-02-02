@@ -76,9 +76,10 @@ class JRecInterface:
 
 def iter(interface, textbox, res):
     interface.response(res)
+    req = interface.request()
     article = interface.request().article
     textbox.delete('1.0', END)
-    textbox.insert(END, article.doc_id + "\n\n"
+    textbox.insert(END, req.id + "\n\n"
                    + "Best: " + str(interface.recommender.recommend_mastery) + "\n\n"
                    + "Current:" + str(interface.recommender.article_mastery(article)) + "\n\n"
                    + "Avg: " + str(interface.recommender.average_mastery) + "\n\n"
@@ -89,8 +90,9 @@ tk.title('SimpleUI       NHK_easy     Sona Tithew')
 tk.resizable(0, 0)
 textbox = Text(tk, font=tkFont.Font(size=12))
 interface = JRecInterface()
+req = interface.request()
 article = interface.request().article
-textbox.insert(END, article.doc_id + "\n\n"
+textbox.insert(END, req.id + "\n\n"
                + "Best: " + str(interface.recommender.recommend_mastery) + "\n\n"
                + "Current:" + str(interface.recommender.article_mastery(article)) + "\n\n"
                + "Avg: " + str(interface.recommender.average_mastery) + "\n\n"
