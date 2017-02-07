@@ -5,12 +5,16 @@ from JPEDU.WordStats import get_word_list_of_text
 from JPEDU.Japanese import stoplist
 
 class Article:
-    def __init__(self, id, text):
-        self.doc_id = id
+    def __init__(self, doc_id, text, wordlist=None, uniq_wordlist=None):
+        self.doc_id = doc_id
         self.text = text
-        wl = get_word_list_of_text(text)
-        self.wordlist = [w for w in wl if not w in stoplist]
-        self.uniq_wordlist = list(set(self.wordlist))
+        if wordlist != None:
+            self.wordlist = wordlist
+            self.uniq_wordlist = uniq_wordlist
+        else:
+            wl = get_word_list_of_text(text)
+            self.wordlist = [w for w in wl if not w in stoplist]
+            self.uniq_wordlist = list(set(self.wordlist))
 
 
     def inter(self, article):

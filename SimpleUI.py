@@ -111,6 +111,7 @@ class SimpleUI:
         #self.build_graph()
         #return
 
+
         tk = Tk()
         tk.title('SimpleUI       NHK_easy     Sona Tithew')
         tk.resizable(0,0)
