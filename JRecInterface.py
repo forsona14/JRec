@@ -22,43 +22,11 @@ class JRecInterface:
         self.recommender = MasteryRecommender(self.articles)
         self.display_article = 0
 
-    @staticmethod
-    def read_articles(fn='Text/nhk_easy.txt', if_article=True, if_para=True, if_sentence=False):
-        f = open(fn)
-        articles ={}
-        line_match = re.compile(r'(k\d{14})\s{4}(.*)\n')
-        for line in f:
-            match = line_match.match(line)
-            if match:
-                news_id = match.group(1)
-                text = match.group(2)
-                if if_article:
-                    articles[news_id] = Article(news_id, text)
-                if not if_para:
-                    continue
-                paras = re.split(' ',text)
-                for pid in xrange(1, len(paras)):
-                    news_para_id = news_id + '_para' + str(pid)
-                    if len(paras[pid].strip()) > 0:
-                        articles[news_para_id] = Article(news_para_id, paras[pid].strip())
-                        #print news_para_id, paras[pid]
-                        if not if_sentence:
-                            continue
-                        sentences = re.split('。', paras[pid].strip())
-                        for sid in xrange(len(sentences)):
-                            news_para_sentence_id = news_para_id + '_s' + str(sid + 1)
-                            if (len(sentences[sid].strip())) > 0:
-                                articles[news_para_sentence_id] = Article(news_para_sentence_id, sentences[sid].strip() + '。')
-                                #print news_para_sentence_id, sentences[sid].strip()
-        print "Articles Read Complete."
-        return articles
-
-    #
     def request(self):
         return self.recommender.request()
 
     def response(self, res):
-        if type(res) == bool:
+        if type(res) == bool or type(res) == int or type(res) == float:
             res = JRecResponse(res)
         self.recommender.response(res)
 

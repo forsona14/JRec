@@ -8,9 +8,11 @@ def iter(interface, textbox, res):
     article = interface.request().article
     textbox.delete('1.0', END)
     textbox.insert(END, req.id + "\n\n"
-                   + "Best: " + str(interface.recommender.recommend_mastery) + "\n\n"
+                   + "Best: " + str(interface.recommender.recommend_mastery) + " ("
+                   + str(interface.recommender.recommend_mastery_lowerbound)+","+ str(interface.recommender.recommend_mastery_upperbound)+")\n\n"
                    + "Current:" + str(interface.recommender.article_mastery(article)) + "\n\n"
-                   + "Avg: " + str(interface.recommender.average_mastery) + "\n\n"
+                   + "Default: " + str(interface.recommender.default_mastery) + "\n\n"
+                   + "Num Decided Words: " + str(interface.recommender.decided_words) + "\n\n"
                    +  article.text.replace(' ', '\n\n'))
 
 def ExampleUI():
@@ -22,9 +24,11 @@ def ExampleUI():
     req = interface.request()
     article = interface.request().article
     textbox.insert(END, req.id + "\n\n"
-                   + "Best: " + str(interface.recommender.recommend_mastery) + "\n\n"
+                   + "Best: " + str(interface.recommender.recommend_mastery) + " ("
+                   + str(interface.recommender.recommend_mastery_lowerbound)+","+ str(interface.recommender.recommend_mastery_upperbound)+")\n\n"
                    + "Current:" + str(interface.recommender.article_mastery(article)) + "\n\n"
-                   + "Avg: " + str(interface.recommender.average_mastery) + "\n\n"
+                   + "Default: " + str(interface.recommender.default_mastery) + "\n\n"
+                   + "Num Decided Words: "+ str(interface.recommender.decided_words) + "\n\n"
                    + article.text.replace(' ', '\n\n'))
     textbox.grid(row=0, column=0, columnspan=5)
     m = IntVar()
