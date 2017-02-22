@@ -12,10 +12,14 @@ class MasteryRecommender:
     INIT_MASTERY = 2.0
     MAX_MASTERY = 4.0       # Mastered
     MIN_MASTERY = 0.0       # Not Mastered
-    YES_MASTERY = 2.5
-    NO_MASTERY  = 1.5
+    YES_MASTERY = 3.0
+    NO_MASTERY  = 1.0
+
+    STOP_LEARN = 18
 
     ML_RATE = 0.8
+    DEFAULT_TRADEOFF = 0.6
+    NEW_WORD_PENALTY = 0.8
 
     def __init__(self, articles):
 
@@ -79,32 +83,48 @@ class MasteryRecommender:
             else:
                 recommend_mastery_offset = 1
         step = (actual_response - expected_response) * self.ML_RATE
-        #step = step / len(article.uniq_wordlist)
+        step = step / len(article.uniq_wordlist)
         num_change = len([w for w in article.uniq_wordlist
                           if not self.mastery.has_key(w) or
                           self.mastery[w] > MasteryRecommender.MIN_MASTERY and
                           self.mastery[w] < MasteryRecommender.MAX_MASTERY])
+
         if num_change > 0:
             step = step * len(article.uniq_wordlist) / num_change
-        for w in article.uniq_wordlist:
-            if not self.mastery.has_key(w):
-                self.mastery[w] = self.default_mastery + step
-            elif self.mastery[w] > MasteryRecommender.MIN_MASTERY and self.mastery[w] < MasteryRecommender.MAX_MASTERY:
-                self.mastery[w] += step
-            if self.mastery[w] > MasteryRecommender.MAX_MASTERY:
-                self.mastery[w] = MasteryRecommender.MAX_MASTERY
-            if self.mastery[w] < MasteryRecommender.MIN_MASTERY:
-                self.mastery[w] = MasteryRecommender.MIN_MASTERY
 
-        #if len(self.response_history) < 2:
-        #    self.recommend_mastery += recommend_mastery_offset * 0.6
-        #elif len(self.response_history) < 6:
+        if len(self.response_history) <= self.STOP_LEARN:
+            for w in article.uniq_wordlist:
+                if not self.mastery.has_key(w):
+                    self.mastery[w] = self.default_mastery + step # + self.NEW_WORD_PENALTY
+                elif self.mastery[w] > MasteryRecommender.MIN_MASTERY and self.mastery[w] < MasteryRecommender.MAX_MASTERY:
+                    self.mastery[w] += step
+                if self.mastery[w] > MasteryRecommender.MAX_MASTERY:
+                    self.mastery[w] = MasteryRecommender.MAX_MASTERY
+                if self.mastery[w] < MasteryRecommender.MIN_MASTERY:
+                    self.mastery[w] = MasteryRecommender.MIN_MASTERY
+
+        #if len(self.response_history) < 3:
+        #    self.recommend_mastery += recommend_mastery_offset * 0.3
+        #elif len(self.response_history) < 10:
+        #    self.recommend_mastery += recommend_mastery_offset * 0.1
+        #else:
+        #    self.recommend_mastery += recommend_mastery_offset * 0.05
+
+        #if len(self.response_history) <= 8:
         #    self.recommend_mastery += recommend_mastery_offset * 0.3
         #else:
-        #    self.recommend_mastery += recommend_mastery_offset * 0.1
+        #    if recommend_mastery_offset > 0:
+        #        self.recommend_mastery_lowerbound = \
+        #            (self.recommend_mastery_lowerbound + self.recommend_mastery_upperbound) / 2
+        #    else:
+        #        self.recommend_mastery_upperbound = \
+        #            (self.recommend_mastery_lowerbound + self.recommend_mastery_upperbound) / 2
+        #    self.recommend_mastery = (self.recommend_mastery_lowerbound + self.recommend_mastery_upperbound) / 2
 
-        if len(self.response_history) <= 8:
-            self.recommend_mastery += recommend_mastery_offset * 0.3
+        if len(self.response_history) < 5:
+         self.recommend_mastery += recommend_mastery_offset * 0.3
+        elif len(self.response_history) <= self.STOP_LEARN:
+            self.recommend_mastery += recommend_mastery_offset * 0.1
         else:
             if recommend_mastery_offset > 0:
                 self.recommend_mastery_lowerbound = \
@@ -114,10 +134,13 @@ class MasteryRecommender:
                     (self.recommend_mastery_lowerbound + self.recommend_mastery_upperbound) / 2
             self.recommend_mastery = (self.recommend_mastery_lowerbound + self.recommend_mastery_upperbound) / 2
 
+
+
         if self.recommend_mastery > MasteryRecommender.MAX_MASTERY:
             self.recommend_mastery = MasteryRecommender.MAX_MASTERY
         if self.recommend_mastery < MasteryRecommender.MIN_MASTERY:
             self.recommend_mastery = MasteryRecommender.MIN_MASTERY
 
-        self.default_mastery = sum(self.mastery.values()) / len(self.mastery.values()) * 0.4 + MasteryRecommender.INIT_MASTERY * 0.6
+        self.default_mastery = sum(self.mastery.values()) / len(self.mastery.values()) * self.DEFAULT_TRADEOFF + \
+                                self.INIT_MASTERY * (1 - self.DEFAULT_TRADEOFF) - self.NEW_WORD_PENALTY
         self.decided_words = len([i for i in self.mastery.values() if i == MasteryRecommender.MIN_MASTERY or i == MasteryRecommender.MAX_MASTERY])

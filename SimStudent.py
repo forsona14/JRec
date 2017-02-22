@@ -11,10 +11,11 @@ class SimStudent:
         self.interface = JRecInterface()
         self.random = random.Random()
         self.random.seed()
+        self.general_offset = self.random.random() * 0.8 - 1.6
         self.mastery = {}
 
     def sim_mastery(self):
-        self.mastery = {w: self.random.random() * 4.0 for w in self.interface.all_uniq_wordlist}
+        self.mastery = {w: self.general_offset + self.random.random() * 4.0 for w in self.interface.all_uniq_wordlist}
         for w in self.mastery.keys():
             if self.mastery[w] > 2.0:
                 self.mastery[w] = 4.0
@@ -49,17 +50,23 @@ class SimStudent:
             self.interface.response(response)
 
 
-    def mul_test(self):
+    def mul_test(self, ml_rate = None):
         errs = []
-        for i in xrange(10):
-            if i%2==0:
-                print 'iteration',i
+        for i in xrange(100):
+            if (i+1)%5==0:
+                print 'iteration',i+1
             self.interface.recommender = MasteryRecommender(self.interface.articles)
+            if ml_rate != None:
+                self.interface.recommender.ML_RATE = ml_rate
             self.sim_mastery()
             errs.append(self.one_test())
         avg_err = [sum([e[i] for e in errs if len(e) > i])/len(errs) for i in xrange(len(errs[0]))]
         print avg_err
 
 ######################################################################################################################
-stu = SimStudent()
-stu.mul_test()
+#for x in [0.4,0.5,0.6,0.7,0.8,0.9,1.0]:
+for x in [0.8]:
+    stu = SimStudent()
+    stu.mul_test(x)
+#stu = SimStudent()
+#stu.mul_test()
