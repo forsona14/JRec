@@ -48,7 +48,8 @@ def convert_text_to_articles(fn='Text/nhk_easy.txt', if_article=True, if_para=Tr
             news_id = match.group(1)
             text = match.group(2)
             if if_article:
-                articles[news_id] = Article(news_id, text)
+                articles[news_id] = Article(news_id, text[text.find(' ')+1:])   # remove title
+                #articles[news_id] = Article(news_id, text)
             if not if_para:
                 continue
             paras = re.split(' ', text)

@@ -121,8 +121,10 @@ class MasteryRecommender:
         #            (self.recommend_mastery_lowerbound + self.recommend_mastery_upperbound) / 2
         #    self.recommend_mastery = (self.recommend_mastery_lowerbound + self.recommend_mastery_upperbound) / 2
 
-        if len(self.response_history) < 5:
-         self.recommend_mastery += recommend_mastery_offset * 0.3
+        if len(self.response_history) < 3:
+            self.recommend_mastery += recommend_mastery_offset * 0.7
+        elif len(self.response_history) < 7:
+            self.recommend_mastery += recommend_mastery_offset * 0.3
         elif len(self.response_history) <= self.STOP_LEARN:
             self.recommend_mastery += recommend_mastery_offset * 0.1
         else:
